@@ -1,39 +1,69 @@
-<!DOCTYPE html>
-<html lang="en-US">
-
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Team</title>
-    <link rel="stylesheet" href="css/style.css">
-  </head>
-
-  <body>
-    <h1>
-      Boston
-    </h1>
-    <form method="get" action=""> <input type="text" name="search" id="search" value="" /> <input type="submit" name="submit" value="Search" /> </form>
-    <table>
-      <tr>
-        <th>Player Name</th>
-        <th>G</th>
-        <th>A</th>
-        <th>Pts</th>
-      </tr>
-      <tr>
-      <td>Brad Marchad</td>
-      <td>
-        .34
-      </td>
-      <td>
-        .54
-      </td>
-      <td>
-        .65
-      </td>
-      </tr>
-    </table>
-    <script src="js/script.js"></script>
-  </body>
-
-</html>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet" />
+<h1>NHL Player Stats</h1>
+<form name="nhl">
+  <div class="entry">
+    <label>Team</label>
+    <select name="teams"></select>
+  </div>
+  <div class="entry">
+    <label>Player</label>
+    <select name="roster"></select>
+  </div>
+  <div class="entry">
+    <label>Season</label>
+    <select name="season"></select>
+  </div>
+</form>
+<hr />
+<div class="results">
+  <div>
+    <h2>Info</h2>
+    <form name="player-info">
+      <div class="entry">
+        <label>First Name</label>
+        <input type="text" name="first-name" autocomplete="off" disabled />
+      </div>
+      <div class="entry">
+        <label>Last Name</label>
+        <input type="text" name="last-name" autocomplete="off" disabled />
+      </div>
+      <div class="entry">
+        <label>Date of Birth</label>
+        <input type="text" name="birth-date" autocomplete="off" disabled />
+      </div>
+      <div class="entry">
+        <label>Current Team</label>
+        <input type="text" name="current-team" autocomplete="off" disabled />
+      </div>
+      <div class="entry">
+        <label>Jersey Number</label>
+        <input type="text" name="primary-number" autocomplete="off" disabled />
+      </div>
+      <div class="entry">
+        <label>Position</label>
+        <input type="text" name="primary-position" autocomplete="off" disabled />
+      </div>
+    </form>
+  </div>
+  <div>
+    <h2>Stats</h2>
+    <form name="player-stats">
+      <div class="entry">
+        <label>Season</label>
+        <input type="text" name="stat-season" autocomplete="off" disabled />
+      </div>
+      <div class="entry">
+        <label>Shots</label>
+        <input type="text" name="stat-shots" autocomplete="off" disabled />
+      </div>
+      <div class="entry">
+        <label>Assists</label>
+        <input type="text" name="stat-assists" autocomplete="off" disabled />
+      </div>
+      <div class="entry">
+        <label>Goals</label>
+        <input type="text" name="stat-goals" autocomplete="off" disabled />
+      </div>
+    </form>
+  </div>
+</div>
