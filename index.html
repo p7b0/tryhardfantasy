@@ -13,8 +13,103 @@
     <label>Season</label>
     <select name="season"></select>
   </div>
+  <div>
+    <input type='button' id='btnAddMyPlayer' value='Add Player to My Team' onclick='addMyPlayer'>
+  </div>
 </form>
 <hr />
+<table id='tblH2HStats'>
+  <tr>
+    <th>Score</th>
+    <th>Games</th>
+    <th>G</th>
+    <th>A</th>
+    <th>Pts</th>
+    <th>+/-</th>
+    <th>PIM</th>
+    <th>PPP</th>
+    <th>SHP</th>
+    <th>GWG</th>
+    <th>SOG</th>
+    <th>FW</th>
+    <th>HIT</th>
+    <th>BLK</th>
+    <th>W</th>
+    <th>GAA</th>
+    <th>SV</th>
+    <th>SV%</th>
+    <th>SHO</th>
+  </tr>
+  <tr id='trMyScore'>
+    <th id='myScore'></th>
+    <th id='myGames'></th>
+    <th id='myGoals'></th>
+    <th id='myAssists'></th>
+    <th id='myPoints'></th>
+    <th id='myPlusMinus'></th>
+    <th id='myPIM'></th>
+    <th id='myPPP'></th>
+    <th id='mySHP'></th>
+    <th id='myGWG'></th>
+    <th id='mySOG'></th>
+    <th id='myFW'></th>
+    <th id='myHIT'></th>
+    <th id='myBLK'></th>
+    <th id='myW'></th>
+    <th id='myGAA'></th>
+    <th id='mySV'></th>
+    <th id='mySV%'></th>
+    <th id='mySHO'></th>
+  </tr>
+  <tr id='trVSScore'>
+    <th id='vsScore'></th>
+    <th id='vsGames'></th>
+    <th id='vsGoals'></th>
+    <th id='vsAssists'></th>
+    <th id='vsPoints'></th>
+    <th id='vsPlusMinus'></th>
+    <th id='vsPIM'></th>
+    <th id='vsPPP'></th>
+    <th id='vsSHP'></th>
+    <th id='vsGWG'></th>
+    <th id='vsSOG'></th>
+    <th id='vsFW'></th>
+    <th id='vsHIT'></th>
+    <th id='vsBLK'></th>
+    <th id='vsW'></th>
+    <th id='vsGAA'></th>
+    <th id='vsSV'></th>
+    <th id='vsSV%'></th>
+    <th id='vsSHO'></th>
+  </tr>
+</table>
+<hr />
+<div class="results">
+<div>
+<h2>My Team</h2>
+<table id='tblMyTeam'>
+  <thead>
+    <tr>
+      <th>Player Name</th>
+      <th>Games Left</th>
+    </tr>
+  </thead>
+</table>
+</div>
+<div>
+<h2>Opponent's Team</h2>
+<table id='tblVSTeam'>
+  <thead>
+    <tr>
+      <th>Player Name</th>
+      <th>Games Left</th>
+    </tr>
+  </thead>
+</table>
+</div>
+</div>
+
+
 <div class="results">
   <div>
     <h2>Info</h2>
