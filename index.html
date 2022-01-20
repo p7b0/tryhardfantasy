@@ -1,3 +1,7 @@
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet" />
 <h1>H2H Fantasy Tool</h1>
 <form name="nhl">
@@ -7,15 +11,30 @@
   </div>
   <div class="entry">
     <label>Player</label>
-    <select name="roster"></select>
+    <select id="playerSelect" name="roster"></select>
   </div>
   <div class="entry">
     <label>Season</label>
     <select name="season"></select>
   </div>
+  <div class="entry">
+    <label>Date Range</label>
+    <input type="text" name="daterange" value="01/01/2018 - 01/15/2018" />
+    <script>
+      $(function() {
+        $('input[name="daterange"]').daterangepicker({
+          opens: 'left'
+        }, function(start, end, label) {
+          console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+        });
+      });
+    </script>
+  </div>
+
+
   <div>
-    <input type='button' id='btnAddMyPlayer' value='Add player to my Team' onclick='addMyPlayer'>
-    <input type='button' id='btnAddVSPlayer' value='Add player to opposing Team' onclick='addVSPlayer'>
+    <input type='button' id='btnAddMyPlayer' value='Add player to my team' onclick='addMyPlayer'>
+    <input type='button' id='btnAddVSPlayer' value='Add player to opposing team' onclick='addVSPlayer'>
   </div>
 </form>
 <hr />
@@ -86,28 +105,28 @@
 </table>
 <hr />
 <div class="results">
-<div>
-<h2>My Team</h2>
-<table id='tblMyTeam'>
-  <thead>
-    <tr>
-      <th>Player Name</th>
-      <th>Games Left</th>
-    </tr>
-  </thead>
-</table>
-</div>
-<div>
-<h2>Opponent's Team</h2>
-<table id='tblVSTeam'>
-  <thead>
-    <tr>
-      <th>Player Name</th>
-      <th>Games Left</th>
-    </tr>
-  </thead>
-</table>
-</div>
+  <div>
+    <h2>My Team</h2>
+    <table id='tblMyTeam'>
+      <thead>
+        <tr>
+          <th>Player Name</th>
+          <th>Games Left</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+  <div>
+    <h2>Opponent's Team</h2>
+    <table id='tblVSTeam'>
+      <thead>
+        <tr>
+          <th>Player Name</th>
+          <th>Games Left</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
 </div>
 
 
@@ -163,4 +182,3 @@
     </form>
   </div>
 </div>
-<script src="http://code.jquery.com/jquery-1.11.0.js"></script>

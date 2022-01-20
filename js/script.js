@@ -43,6 +43,11 @@ const fetchTeams = async () => {
     a.name.localeCompare(b.name));
 }
 
+const fetchSchedule = async (teamId) => {
+	const response = await fetch(`${api.baseUrl}/schedule?${teamId}=2&startDate=2022-01-17&endDate=2022-01-23`);
+  const json = await response.json();
+}
+
 const fetchRoster = async (teamId) => {
   const response = await fetch(`${api.baseUrl}/teams/${teamId}/roster`);
   const json = await response.json();
@@ -181,7 +186,7 @@ const addMyPlayer = async (e) => {
   var cell1 = row.insertCell(0),
     cell2 = row.insertCell(1);
 
-  let playerName = document.createTextNode(player.firstName + ' ' + player.lastName);
+  let playerName = document.createTextNode(player.fullName);
   cell1.appendChild(playerName);
   let playerGames = document.createTextNode(stats.games);
   cell2.appendChild(playerGames);
@@ -199,7 +204,7 @@ const addVSPlayer = async (e) => {
   var cell1 = row.insertCell(0),
     cell2 = row.insertCell(1);
 
-  let playerName = document.createTextNode(player.firstName + ' ' + player.lastName);
+  let playerName = document.createTextNode(player.fullName);
   cell1.appendChild(playerName);
   let playerGames = document.createTextNode(stats.games || 0);
   cell2.appendChild(playerGames);

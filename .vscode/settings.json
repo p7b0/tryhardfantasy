@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/b24c8034-d480-4442-b880-a3822b1367c0/resourceGroups/tryhardfantasy/providers/Microsoft.Web/sites/tryhardfantasy",
+    "appService.deploySubpath": "."
+}
