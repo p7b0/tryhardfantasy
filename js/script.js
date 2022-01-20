@@ -43,10 +43,11 @@ const fetchTeams = async () => {
     a.name.localeCompare(b.name));
 }
 
+/*
 const fetchSchedule = async (teamId) => {
 	const response = await fetch(`${api.baseUrl}/schedule?${teamId}=2&startDate=2022-01-17&endDate=2022-01-23`);
   const json = await response.json();
-}
+}*/
 
 const fetchRoster = async (teamId) => {
   const response = await fetch(`${api.baseUrl}/teams/${teamId}/roster`);
