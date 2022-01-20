@@ -83,17 +83,44 @@ const fetchStats = async (playerId, seasonId) => {
   }
   const season = seasonId.match(/^(\d{4})(\d{4})$/).slice(1).join(' – ');
   const {
-    shots,
-    assists,
+  	games,
     goals,
-    timeOnIce
+    assists,
+    points,
+   	plusMinus,
+   	pim,
+    powerPlayPoints,
+    shortHandedPoints,
+    gameWinningGoals,
+    shots,
+    faceOffPct, //no faceoff wins here
+    hits,
+    blocked,
+    wins,
+    goalAgainstAverage,
+    saves,
+    savePercentage,
+    shutouts
   } = seasonStats;
   return {
-    season,
-    shots,
-    assists,
+    games,
     goals,
-    timeOnIce
+    assists,
+    points,
+   	plusMinus,
+   	pim,
+    powerPlayPoints,
+    shortHandedPoints,
+    gameWinningGoals,
+    shots,
+    faceOffPct, //no faceoff wins here
+    hits,
+    blocked,
+    wins,
+    goalAgainstAverage,
+    saves,
+    savePercentage,
+    shutouts
   };
 }
 
@@ -142,14 +169,41 @@ const onSeasonChange = async (e) => {
   });
 }
 
-const addMyPlayer = async(e) => {
-	console.log('were in');
+const addMyPlayer = async (e) => {
+ const playerSelect = document.querySelector('select[name="roster"]');
+ const seasonSelect = document.forms['nhl']['season'];
+  const player = await fetchPlayer(playerSelect.value);
+  const stats = await fetchStats(playerSelect.value, seasonSelect.value);
+  
   var tbl = document.getElementById('tblMyTeam'),
-    row = tbl.insertRow(tbl.rows.lentgh),
-    i;
-    
-    var cell1 = row.insertCell(0), cell2 = row.insertCell(1);
-    cell1.changeContent('Mr Anderson');
+    row = tbl.insertRow(tbl.rows.lentgh);
+
+  var cell1 = row.insertCell(0),
+    cell2 = row.insertCell(1);
+
+  let playerName = document.createTextNode(player.firstName + ' ' + player.lastName);
+  cell1.appendChild(playerName);
+  let playerGames = document.createTextNode(stats.games);
+  cell2.appendChild(playerGames);
+}
+
+const addVSPlayer = async (e) => {
+ const playerSelect = document.querySelector('select[name="roster"]');
+ const seasonSelect = document.forms['nhl']['season'];
+  const player = await fetchPlayer(playerSelect.value);
+  const stats = await fetchStats(playerSelect.value, seasonSelect.value);
+  
+  var tbl = document.getElementById('tblVSTeam'),
+    row = tbl.insertRow(tbl.rows.lentgh);
+
+  var cell1 = row.insertCell(0),
+    cell2 = row.insertCell(1);
+
+  let playerName = document.createTextNode(player.firstName + ' ' + player.lastName);
+  cell1.appendChild(playerName);
+  let playerGames = document.createTextNode(stats.games || 0);
+  cell2.appendChild(playerGames);
+  
 }
 
 /*
@@ -167,7 +221,8 @@ const main = async () => {
   const teamSelect = nhl['teams'];
   const playerSelect = nhl['roster'];
   const seasonSelect = nhl['season'];
-  const btnAddMyPlayer = document.getElementById('btnAddMyPlayer');
+  const btnAddMyPlayer = document.getElementById('btnAddMyPlayer').addEventListener('click', addMyPlayer);
+  const btnAddVSPlayer = document.getElementById('btnAddVSPlayer').addEventListener('click', addVSPlayer);
 
   populateSeasons(seasonSelect);
 
@@ -178,9 +233,6 @@ const main = async () => {
   teamSelect.addEventListener('change', onTeamChange);
   playerSelect.addEventListener('change', onPlayerChange);
   seasonSelect.addEventListener('change', onSeasonChange);
-console.log('before');
-  //btnAddMyPlayer.addEventListen('click', addMyPlayer);
-console.log('after');
   teamSelect.value = 14; // Tampa Bay
   seasonSelect.value = '20212022'; // 2019-2020
 
