@@ -9,15 +9,15 @@
 <form name="nhl">
   <div class="entry">
     <label>Team</label>
-    <select name="teams"></select>
+    <select id='teamSelect' name="teams" onchange="onTeamChange"></select>
   </div>
   <div class="entry">
     <label>Player</label>
-    <select id="playerSelect" name="roster"></select>
+    <select id="playerSelect" name="roster" onchange="onPlayerChange"></select>
   </div>
   <div class="entry">
     <label>Season</label>
-    <select name="season"></select>
+    <select id='seasonSelect' name="season" onchange="onSeasonChange"></select>
   </div>
   <div class="entry">
     <label>Date Range</label>
@@ -131,7 +131,7 @@
   </div>
 </div>
 
-<!--
+
 <div class="results">
   <div>
     <h2>Info</h2>
@@ -184,4 +184,3 @@
     </form>
   </div>
 </div>
--->

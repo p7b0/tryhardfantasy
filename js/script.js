@@ -15,7 +15,7 @@ const emptySelect = (select) => {
 }
 
 const populateSelect = (select, data, keyFn, textFn) => {
-  emptySelect(select);
+  //emptySelect(select);
   data.forEach(item =>
     select.add(new Option(textFn(item), keyFn(item))));
   return select;
@@ -146,7 +146,7 @@ const onTeamChange = async (e) => {
 };
 
 const onPlayerChange = async (e) => {
-  const seasonSelect = document.forms['nhl']['season'];
+  const seasonSelect = document.querySelector('select[name="season"]');
   const playerId = e.target.value;
   const player = await fetchPlayer(playerId);
 
@@ -177,7 +177,7 @@ const onSeasonChange = async (e) => {
 
 const addMyPlayer = async (e) => {
  const playerSelect = document.querySelector('select[name="roster"]');
- const seasonSelect = document.forms['nhl']['season'];
+ const seasonSelect = document.querySelector('select[name="season"]');
   const player = await fetchPlayer(playerSelect.value);
   const stats = await fetchStats(playerSelect.value, seasonSelect.value);
   
@@ -195,7 +195,7 @@ const addMyPlayer = async (e) => {
 
 const addVSPlayer = async (e) => {
  const playerSelect = document.querySelector('select[name="roster"]');
- const seasonSelect = document.forms['nhl']['season'];
+ const seasonSelect = document.querySelector('select[name="season"]');
   const player = await fetchPlayer(playerSelect.value);
   const stats = await fetchStats(playerSelect.value, seasonSelect.value);
   
@@ -212,23 +212,15 @@ const addVSPlayer = async (e) => {
   
 }
 
-/*
-function createCell(cell, text, style) {
-    var div = document.createElement('div'), // create DIV element
-        txt = document.createTextNode(text); // create text node
-    div.appendChild(txt);                    // append text node to the DIV
-    div.setAttribute('class', style);        // set DIV class attribute
-    div.setAttribute('className', style);    // set DIV class attribute for IE (?!)
-    cell.appendChild(div);                   // append DIV to the table cell
-}*/
-
 const main = async () => {
-  const nhl = document.forms['nhl'];
-  const teamSelect = nhl['teams'];
-  const playerSelect = nhl['roster'];
-  const seasonSelect = nhl['season'];
-  const btnAddMyPlayer = document.getElementById('btnAddMyPlayer').addEventListener('click', addMyPlayer);
-  const btnAddVSPlayer = document.getElementById('btnAddVSPlayer').addEventListener('click', addVSPlayer);
+  const teamSelect = $('teamSelect');
+  const playerSelect = $('playerSelect');
+  const seasonSelect = $('seasonSelect');
+  //const btnAddMyPlayer = $('btnAddMyPlayer').addEventListener('click', addMyPlayer); REPLACE IN HTML
+  //const btnAddVSPlayer = $('btnAddVSPlayer').addEventListener('click', addVSPlayer); 
+
+  teamSelect.value = '14'; // Tampa Bay //NO WORK
+  seasonSelect.value = '20212022'; //NO WORK
 
   populateSeasons(seasonSelect);
 
@@ -236,11 +228,9 @@ const main = async () => {
 
   populateSelect(teamSelect, teams, team => team.id, team => team.name);
 
-  teamSelect.addEventListener('change', onTeamChange);
-  playerSelect.addEventListener('change', onPlayerChange);
-  seasonSelect.addEventListener('change', onSeasonChange);
-  teamSelect.value = 14; // Tampa Bay
-  seasonSelect.value = '20212022'; // 2019-2020
+  //teamSelect.addEventListener('change', onTeamChange); REPLACED IN HTML
+  //playerSelect.addEventListener('change', onPlayerChange);
+  //seasonSelect.addEventListener('change', onSeasonChange);
 
   triggerEvent(teamSelect, 'change');
 };
