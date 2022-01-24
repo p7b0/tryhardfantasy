@@ -15,7 +15,7 @@ const emptySelect = (select) => {
 }
 
 const populateSelect = (select, data, keyFn, textFn) => {
-  //emptySelect(select);
+  emptySelect(select);
   data.forEach(item =>
     select.add(new Option(textFn(item), keyFn(item))));
   return select;
@@ -47,7 +47,8 @@ const fetchTeams = async () => {
 const fetchSchedule = async (teamId) => {
 	const response = await fetch(`${api.baseUrl}/schedule?${teamId}=2&startDate=2022-01-17&endDate=2022-01-23`);
   const json = await response.json();
-}*/
+}
+*/
 
 const fetchRoster = async (teamId) => {
   const response = await fetch(`${api.baseUrl}/teams/${teamId}/roster`);
@@ -213,14 +214,11 @@ const addVSPlayer = async (e) => {
 }
 
 const main = async () => {
-  const teamSelect = $('teamSelect');
-  const playerSelect = $('playerSelect');
-  const seasonSelect = $('seasonSelect');
-  //const btnAddMyPlayer = $('btnAddMyPlayer').addEventListener('click', addMyPlayer); REPLACE IN HTML
-  //const btnAddVSPlayer = $('btnAddVSPlayer').addEventListener('click', addVSPlayer); 
-
-  teamSelect.value = '14'; // Tampa Bay //NO WORK
-  seasonSelect.value = '20212022'; //NO WORK
+  const nhl = document.forms['nhl'];
+  const teamSelect = nhl['teams'];
+  const playerSelect = nhl['roster'];
+  const seasonSelect = nhl['season'];
+ 
 
   populateSeasons(seasonSelect);
 
@@ -228,9 +226,13 @@ const main = async () => {
 
   populateSelect(teamSelect, teams, team => team.id, team => team.name);
 
-  //teamSelect.addEventListener('change', onTeamChange); REPLACED IN HTML
-  //playerSelect.addEventListener('change', onPlayerChange);
-  //seasonSelect.addEventListener('change', onSeasonChange);
+  teamSelect.addEventListener('change', onTeamChange);
+  playerSelect.addEventListener('change', onPlayerChange);
+  seasonSelect.addEventListener('change', onSeasonChange);
+  
+
+  teamSelect.value = 14;           // Tampa Bay
+  seasonSelect.value = '20212022'; 
 
   triggerEvent(teamSelect, 'change');
 };
