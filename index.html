@@ -18,21 +18,13 @@
     <label>Season</label>
     <select id='seasonSelect' name="season"></select>
   </div>
-  <!--
   <div class="entry">
-    <label>Date Range</label>
-    <input type="text" name="daterange" value="01/01/2018 - 01/15/2018" />
-    <script>
-      $(function() {
-        $('input[name="daterange"]').daterangepicker({
-          opens: 'left'
-        }, function(start, end, label) {
-          console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-        });
-      });
-    </script>
+    <label for="startDate">Start Date:</label>
+    <input type="date" id="startDate" name="startDate" value="2022-01-25"><br>
+    <label for="endDate">End Date:</label>
+    <input type="date" id="endDate" name="endDate" value="2022-01-30">
   </div>
-  -->
+
   <div>
     <input type='button' id='btnAddMyPlayer' value='Add player to my team' onclick="addMyPlayer()">
     <input type='button' id='btnAddVSPlayer' value='Add player to opposing team' onclick="addVSPlayer()">
@@ -131,56 +123,3 @@
 </div>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
-
-<div class="results">
-  <div>
-    <h2>Info</h2>
-    <form name="player-info">
-      <div class="entry">
-        <label>First Name</label>
-        <input type="text" name="first-name" autocomplete="off" disabled />
-      </div>
-      <div class="entry">
-        <label>Last Name</label>
-        <input type="text" name="last-name" autocomplete="off" disabled />
-      </div>
-      <div class="entry">
-        <label>Date of Birth</label>
-        <input type="text" name="birth-date" autocomplete="off" disabled />
-      </div>
-      <div class="entry">
-        <label>Current Team</label>
-        <input type="text" name="current-team" autocomplete="off" disabled />
-      </div>
-      <div class="entry">
-        <label>Jersey Number</label>
-        <input type="text" name="primary-number" autocomplete="off" disabled />
-      </div>
-      <div class="entry">
-        <label>Position</label>
-        <input type="text" name="primary-position" autocomplete="off" disabled />
-      </div>
-    </form>
-  </div>
-  <div>
-    <h2>Stats</h2>
-    <form name="player-stats">
-      <div class="entry">
-        <label>Season</label>
-        <input type="text" name="stat-season" autocomplete="off" disabled />
-      </div>
-      <div class="entry">
-        <label>Shots</label>
-        <input type="text" name="stat-shots" autocomplete="off" disabled />
-      </div>
-      <div class="entry">
-        <label>Assists</label>
-        <input type="text" name="stat-assists" autocomplete="off" disabled />
-      </div>
-      <div class="entry">
-        <label>Goals</label>
-        <input type="text" name="stat-goals" autocomplete="off" disabled />
-      </div>
-    </form>
-  </div>
-</div>

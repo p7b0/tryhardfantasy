@@ -21,9 +21,11 @@ const populateSelect = (select, data, keyFn, textFn) => {
   return select;
 };
 
+/*
 const populateForm = (form, fields) =>
   Object.entries(fields).forEach(([key, value]) =>
     form[key].value = value);
+*/
 
 const populateSeasons = (select) => {
   const year = new Date().getUTCFullYear();
@@ -43,12 +45,24 @@ const fetchTeams = async () => {
     a.name.localeCompare(b.name));
 }
 
-/*
 const fetchSchedule = async (teamId) => {
-	const response = await fetch(`${api.baseUrl}/schedule?${teamId}=2&startDate=2022-01-17&endDate=2022-01-23`);
+  const startDate = document.getElementById('startDate').value;
+  const endDate = document.getElementById('endDate').value;
+  
+	const response = await fetch(`${api.baseUrl}/schedule?teamId=${teamId}&startDate=${startDate}&endDate=${endDate}`);
   const json = await response.json();
+
+  let counter = json.totalGames;
+  //now we need to scan the json to find the games that already happened or are post poned, which happens in detailedState
+  /*
+  for (let i=0; i<counter-1;i++){
+    console.log(json.dates[counter].games[0].status.detailedState);
+    if(json.dates[counter].games[0].status.detailedState!='Scheduled'){
+      counter--;
+    }
+  }*/
+  return counter;
 }
-*/
 
 const fetchRoster = async (teamId) => {
   const response = await fetch(`${api.baseUrl}/teams/${teamId}/roster`);
@@ -151,6 +165,7 @@ const onPlayerChange = async (e) => {
   const playerId = e.target.value;
   const player = await fetchPlayer(playerId);
 
+  /*
   populateForm(document.forms['player-info'], {
     'first-name': player.firstName,
     'last-name': player.lastName,
@@ -158,7 +173,7 @@ const onPlayerChange = async (e) => {
     'current-team': player.currentTeam.name,
     'primary-number': player.primaryNumber,
     'primary-position': player.primaryPosition.type
-  });
+  });*/
 
   triggerEvent(seasonSelect, 'change');
 };
@@ -168,17 +183,19 @@ const onSeasonChange = async (e) => {
   const seasonId = e.target.value;
   const stats = await fetchStats(playerSelect.value, seasonId);
 
+  /*
   populateForm(document.forms['player-stats'], {
     'stat-season': stats.season,
     'stat-shots': stats.shots || 'N/A',
     'stat-assists': stats.assists || 'N/A',
     'stat-goals': stats.goals || 'N/A'
-  });
+  });*/
 }
 
 const addMyPlayer = async (e) => {
  const playerSelect = document.querySelector('select[name="roster"]');
  const seasonSelect = document.querySelector('select[name="season"]');
+ const teamSelect = document.querySelector('select[name="teams"]');
   const player = await fetchPlayer(playerSelect.value);
   const stats = await fetchStats(playerSelect.value, seasonSelect.value);
   
@@ -190,13 +207,14 @@ const addMyPlayer = async (e) => {
 
   let playerName = document.createTextNode(player.fullName);
   cell1.appendChild(playerName);
-  let playerGames = document.createTextNode(stats.games);
-  cell2.appendChild(playerGames);
+  let playerGames = await fetchSchedule(teamSelect.value);
+  cell2.innerHTML=playerGames;
 }
 
 const addVSPlayer = async (e) => {
  const playerSelect = document.querySelector('select[name="roster"]');
  const seasonSelect = document.querySelector('select[name="season"]');
+ const teamSelect = document.querySelector('select[name="teams"]');
   const player = await fetchPlayer(playerSelect.value);
   const stats = await fetchStats(playerSelect.value, seasonSelect.value);
   
@@ -208,9 +226,8 @@ const addVSPlayer = async (e) => {
 
   let playerName = document.createTextNode(player.fullName);
   cell1.appendChild(playerName);
-  let playerGames = document.createTextNode(stats.games || 0);
-  cell2.appendChild(playerGames);
-  
+  let playerGames = await fetchSchedule(teamSelect.value);
+  cell2.innerHTML=playerGames;
 }
 
 const main = async () => {
@@ -218,6 +235,8 @@ const main = async () => {
   const teamSelect = nhl['teams'];
   const playerSelect = nhl['roster'];
   const seasonSelect = nhl['season'];
+  const startDate = document.getElementById("startDate");
+  const endDate = document.getElementById("endDate");
  
 
   populateSeasons(seasonSelect);
@@ -229,6 +248,8 @@ const main = async () => {
   teamSelect.addEventListener('change', onTeamChange);
   playerSelect.addEventListener('change', onPlayerChange);
   seasonSelect.addEventListener('change', onSeasonChange);
+  //startDate.addEventListener('change',);
+  //endDate.addEventListener('change',);
   
 
   teamSelect.value = 14;           // Tampa Bay
