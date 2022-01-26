@@ -2,6 +2,69 @@ const api = {
   baseUrl: 'https://statsapi.web.nhl.com/api/v1'
 };
 
+const managerStats = {
+  goals: 0,
+  assists: 0,
+  points: 0,
+  plusMinus: 0,
+  pim: 0,
+  ppp: 0,
+  shp: 0,
+  gwg: 0,
+  sog: 0,
+  fw: 0,
+  hit: 0,
+  blk: 0,
+  w: 0,
+  gaa: 0,
+  sv: 0,
+  svp: 0,
+  sho: 0
+};
+
+const opponentsAvgStats = {
+  goals: 0,
+  assists: 0,
+  points: 0,
+  plusMinus: 0,
+  pim: 0,
+  ppp: 0,
+  shp: 0,
+  gwg: 0,
+  sog: 0,
+  fw: 0,
+  hit: 0,
+  blk: 0,
+  w: 0,
+  gaa: 0,
+  sv: 0,
+  svp: 0,
+  sho: 0
+};
+
+const averageOutStats = async(stats) => {
+  return avgStats = {
+    games: stats.games,
+    goals: stats.goals/stats.games,
+    assists: stats.assists/stats.games,
+    points: stats.points/stats.games,
+   	plusMinus: stats.plusMinus/stats.games,
+   	pim: stats.pim/stats.games,
+    powerPlayPoints: stats.powerPlayPoints/stats.games,
+    shortHandedPoints: stats.shortHandedPoints/stats.games,
+    gameWinningGoals: stats.gameWinningGoals/stats.games,
+    shots: stats.shots/stats.games,
+    faceOffPct: stats.faceOffPct, //no faceoff wins here
+    hits: stats.hits/stats.games,
+    blocked: stats.blocked/stats.games,
+    wins: stats.wins/stats.games,
+    goalAgainstAverage: stats.goalAgainstAverage,
+    saves: stats.saves/stats.games,
+    savePercentage: stats.savePercentage,
+    shutouts: stats.shutouts/stats.games
+  }
+}
+
 const triggerEvent = (el, eventName) => {
   const event = document.createEvent('HTMLEvents');
   event.initEvent(eventName, true, false);
@@ -35,7 +98,7 @@ const populateSeasons = (select) => {
   }));
   return populateSelect(select, seasons,
     season => `${season.start}${season.end}`,
-    season => `${season.start} – ${season.end}`);
+    season => `${season.start} - ${season.end}`);
 }
 
 const fetchTeams = async () => {
@@ -146,7 +209,7 @@ const fetchStats = async (playerId, seasonId) => {
 }
 
 const formatPlayerOptionText = (player) =>
-  `${player.jerseyNumber || ''} – ${player.person.fullName} (${player.position.abbreviation})`
+  `${player.jerseyNumber || ''} - ${player.person.fullName} (${player.position.abbreviation})`
 
 const onTeamChange = async (e) => {
   const teamId = e.target.value;
@@ -209,14 +272,20 @@ const addMyPlayer = async (e) => {
   cell1.appendChild(playerName);
   let playerGames = await fetchSchedule(teamSelect.value);
   cell2.innerHTML=playerGames;
+  //definitely need to add a button to remove player
 }
 
+//really should have 1 addPlayer and pass in the manager you add the player to
 const addVSPlayer = async (e) => {
  const playerSelect = document.querySelector('select[name="roster"]');
  const seasonSelect = document.querySelector('select[name="season"]');
  const teamSelect = document.querySelector('select[name="teams"]');
   const player = await fetchPlayer(playerSelect.value);
+  const playerGames = await fetchSchedule(teamSelect.value);
   const stats = await fetchStats(playerSelect.value, seasonSelect.value);
+  const avgStats = await averageOutStats(stats);
+
+  //now we need to take the average stats, multiply them by the player's games in the date range and add them to the proper row
   
   var tbl = document.getElementById('tblVSTeam'),
     row = tbl.insertRow(tbl.rows.lentgh);
@@ -226,8 +295,10 @@ const addVSPlayer = async (e) => {
 
   let playerName = document.createTextNode(player.fullName);
   cell1.appendChild(playerName);
-  let playerGames = await fetchSchedule(teamSelect.value);
   cell2.innerHTML=playerGames;
+
+  //addStats(manager)
+  //updateScore()
 }
 
 const main = async () => {
