@@ -42,8 +42,10 @@ const opponentsAvgStats = {
   sho: 0
 };
 
+//simply averages out the stats given by the number of games they're based on...as of now, it's limited to the season being selected
 const averageOutStats = async(stats) => {
-  return avgStats = {
+  /*
+  let avgStats = {
     games: stats.games,
     goals: stats.goals/stats.games,
     assists: stats.assists/stats.games,
@@ -62,7 +64,58 @@ const averageOutStats = async(stats) => {
     saves: stats.saves/stats.games,
     savePercentage: stats.savePercentage,
     shutouts: stats.shutouts/stats.games
+  }*/
+  let avgStats = {
+    games: 0,
+    goals: 0,
+    assists: 0,
+    points: 0,
+   	plusMinus: 0,
+   	pim: 0,
+    powerPlayPoints: 0,
+    shortHandedPoints: 0,
+    gameWinningGoals: 0,
+    shots: 0,
+    faceOffPct: 0, //no faceoff wins here
+    hits: 0,
+    blocked: 0,
+    wins: 0,
+    goalAgainstAverage: 0,
+    saves: 0,
+    savePercentage: 0,
+    shutouts: 0
   }
+
+  if(isNaN(stats.games)){avgStats.games = 0}else{avgStats.games = stats.games}
+  if(isNaN(stats.goals)){avgStats.goals = 0}else{avgStats.goals = stats.goals/stats.games}
+  if(isNaN(stats.assists)){avgStats.assists = 0}else{avgStats.assists = stats.assists/stats.games}
+  //continue this, it works
+
+  return avgStats
+}
+
+//function that will add the average stats of the player being added to a team's scoring table depending on the games they have within the date range.
+//input should be manager, avgstats, playerGames....for now we'll just focus on MyTeam and just pass avgstats and playerGames
+const addStats = async(avgStats, playerGames) => {
+  //start by grabbing the cells
+  var cells = document.getElementsByTagName('td');
+
+  //add each of the averaged stat multiplied by the playerGames to each cell
+  //cell 0 is My Score, this will be manipulated by another function
+  //start by grabbing the contents of the cell, add to it, reprint the cell
+  cells[1].innerHTML = Number(cells[1].innerHTML) + playerGames;
+  cells[2].innerHTML = Math.round(Number(cells[2].innerHTML) + avgStats.goals*playerGames);
+  cells[3].innerHTML = Math.round(Number(cells[3].innerHTML) + avgStats.assists*playerGames);
+//continue this, it works
+
+
+
+
+
+
+
+
+
 }
 
 const triggerEvent = (el, eventName) => {
@@ -256,26 +309,32 @@ const onSeasonChange = async (e) => {
 }
 
 const addMyPlayer = async (e) => {
- const playerSelect = document.querySelector('select[name="roster"]');
- const seasonSelect = document.querySelector('select[name="season"]');
- const teamSelect = document.querySelector('select[name="teams"]');
-  const player = await fetchPlayer(playerSelect.value);
-  const stats = await fetchStats(playerSelect.value, seasonSelect.value);
-  
-  var tbl = document.getElementById('tblMyTeam'),
-    row = tbl.insertRow(tbl.rows.lentgh);
-
-  var cell1 = row.insertCell(0),
-    cell2 = row.insertCell(1);
-
-  let playerName = document.createTextNode(player.fullName);
-  cell1.appendChild(playerName);
-  let playerGames = await fetchSchedule(teamSelect.value);
-  cell2.innerHTML=playerGames;
-  //definitely need to add a button to remove player
+  const playerSelect = document.querySelector('select[name="roster"]');
+  const seasonSelect = document.querySelector('select[name="season"]');
+  const teamSelect = document.querySelector('select[name="teams"]');
+   const player = await fetchPlayer(playerSelect.value);
+   const playerGames = await fetchSchedule(teamSelect.value);//something is wrong with this, it seems like it's holding on to numbers when teams change
+   const stats = await fetchStats(playerSelect.value, seasonSelect.value);
+   const avgStats = await averageOutStats(stats);
+ 
+   //now we need to take the average stats, multiply them by the player's games in the date range and add them to the proper row
+   //here we take the player name and how many games they have left (but really just the number of games retured by total games in the fetchSchedule json) and place it into the manager's table
+   var tbl = document.getElementById('tblMyTeam'),
+     row = tbl.insertRow(tbl.rows.lentgh);
+   var cell1 = row.insertCell(0),
+     cell2 = row.insertCell(1);
+   let playerName = document.createTextNode(player.fullName);
+   cell1.appendChild(playerName);
+   cell2.innerHTML=playerGames;
+   //need a button to remove player
+   
+   //addStats(manager, stats, playerGames) <-- ideal call here, but we'll have to make due with addStats(avgStats, playergGames) for now since I don't have a manager object being handled by the buttons yet
+  addStats(avgStats, playerGames);
+   //updateScore()
 }
 
-//really should have 1 addPlayer and pass in the manager you add the player to
+//HOLD DEV ON THIS BUTTON, WORK ON addMyPlayer first, and then migrate changes to this button funtion...eventually we will only have one of theses
+//really should have 1 addPlayer and pass in the manager you add the player to, when you do, rebuild the functions that manipulate the html to take a manager object
 const addVSPlayer = async (e) => {
  const playerSelect = document.querySelector('select[name="roster"]');
  const seasonSelect = document.querySelector('select[name="season"]');
@@ -286,18 +345,18 @@ const addVSPlayer = async (e) => {
   const avgStats = await averageOutStats(stats);
 
   //now we need to take the average stats, multiply them by the player's games in the date range and add them to the proper row
-  
+  //here we take the player name and how many games they have left (but really just the number of games retured by total games in the fetchSchedule json) and place it into the manager's table
   var tbl = document.getElementById('tblVSTeam'),
     row = tbl.insertRow(tbl.rows.lentgh);
-
   var cell1 = row.insertCell(0),
     cell2 = row.insertCell(1);
-
   let playerName = document.createTextNode(player.fullName);
   cell1.appendChild(playerName);
   cell2.innerHTML=playerGames;
+  //need a button to remove player
 
-  //addStats(manager)
+  //addStats(manager, stats, playerGames) <-- ideal call here, but we'll have to make due with addStats(avgStats, playergGames) for now since I don't have a manager object being handled by the buttons yet
+
   //updateScore()
 }
 
