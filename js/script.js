@@ -82,9 +82,9 @@ const averageOutStats = async(stats) => {
   if(isNaN(stats.hits)){avgStats.hits = 0}else{avgStats.hits = stats.hits/stats.games}
   if(isNaN(stats.blocked)){avgStats.blocked = 0}else{avgStats.blocked = stats.blocked/stats.games}
   if(isNaN(stats.wins)){avgStats.wins = 0}else{avgStats.wins = stats.wins/stats.games}
-  if(isNaN(stats.goalAgainstAverage)){avgStats.goalAgainstAverage = 0}else{avgStats.goalAgainstAverage = stats.goalAgainstAverage/stats.games}
+  if(isNaN(stats.goalAgainstAverage)){avgStats.goalAgainstAverage = 0}else{avgStats.goalAgainstAverage = stats.goalAgainstAverage}
   if(isNaN(stats.saves)){avgStats.saves = 0}else{avgStats.saves = stats.saves/stats.games}
-  if(isNaN(stats.savePercentage)){avgStats.savePercentage = 0}else{avgStats.savePercentage = stats.savePercentage/stats.games}
+  if(isNaN(stats.savePercentage)){avgStats.savePercentage = 0}else{avgStats.savePercentage = stats.savePercentage}
   if(isNaN(stats.shutouts)){avgStats.shutouts = 0}else{avgStats.shutouts = stats.shutouts/stats.games}
 
   return avgStats
@@ -102,45 +102,141 @@ const addStats = async(manager, avgStats, playerGames) => {
   //start by grabbing the contents of the cell, add to it, reprint the cell
   if(manager == 0){
     cells[1].innerHTML = Number(cells[1].innerHTML) + playerGames;
-    cells[2].innerHTML = Math.round(Number(cells[2].innerHTML) + avgStats.goals*playerGames);
-    cells[3].innerHTML = Math.round(Number(cells[3].innerHTML) + avgStats.assists*playerGames);
-    cells[4].innerHTML = Math.round(Number(cells[4].innerHTML) + avgStats.points*playerGames);
-    cells[5].innerHTML = Math.round(Number(cells[5].innerHTML) + avgStats.plusMinus*playerGames);
-    cells[6].innerHTML = Math.round(Number(cells[6].innerHTML) + avgStats.pim*playerGames);
-    cells[7].innerHTML = Math.round(Number(cells[7].innerHTML) + avgStats.powerPlayPoints*playerGames);
-    cells[8].innerHTML = Math.round(Number(cells[8].innerHTML) + avgStats.shortHandedPoints*playerGames);
-    cells[9].innerHTML = Math.round(Number(cells[9].innerHTML) + avgStats.gameWinningGoals*playerGames);
-    cells[10].innerHTML = Math.round(Number(cells[10].innerHTML) + avgStats.shots*playerGames);
-    cells[11].innerHTML = Math.round(Number(cells[11].innerHTML) + avgStats.faceOffPct*playerGames);
-    cells[12].innerHTML = Math.round(Number(cells[12].innerHTML) + avgStats.hits*playerGames);
-    cells[13].innerHTML = Math.round(Number(cells[13].innerHTML) + avgStats.blocked*playerGames);
-    cells[14].innerHTML = Math.round(Number(cells[14].innerHTML) + avgStats.wins*playerGames);
-    cells[15].innerHTML = Math.round(Number(cells[15].innerHTML) + avgStats.goalAgainstAverage*playerGames);
-    cells[16].innerHTML = Math.round(Number(cells[16].innerHTML) + avgStats.saves*playerGames);
-    cells[17].innerHTML = Math.round(Number(cells[17].innerHTML) + avgStats.savePercentage*playerGames);
-    cells[18].innerHTML = Math.round(Number(cells[18].innerHTML) + avgStats.shutouts*playerGames);
+    cells[2].innerHTML = (Number(cells[2].innerHTML) + avgStats.goals*playerGames).toFixed(2);
+    cells[3].innerHTML = (Number(cells[3].innerHTML) + avgStats.assists*playerGames).toFixed(2);
+    cells[4].innerHTML = (Number(cells[4].innerHTML) + avgStats.points*playerGames).toFixed(2);
+    cells[5].innerHTML = (Number(cells[5].innerHTML) + avgStats.plusMinus*playerGames).toFixed(2);
+    cells[6].innerHTML = (Number(cells[6].innerHTML) + avgStats.pim*playerGames).toFixed(2);
+    cells[7].innerHTML = (Number(cells[7].innerHTML) + avgStats.powerPlayPoints*playerGames).toFixed(2);
+    cells[8].innerHTML = (Number(cells[8].innerHTML) + avgStats.shortHandedPoints*playerGames).toFixed(2);
+    cells[9].innerHTML = (Number(cells[9].innerHTML) + avgStats.gameWinningGoals*playerGames).toFixed(2);
+    cells[10].innerHTML = (Number(cells[10].innerHTML) + avgStats.shots*playerGames).toFixed(2);
+    cells[11].innerHTML = (Number(cells[11].innerHTML) + avgStats.faceOffPct*playerGames).toFixed(2);
+    cells[12].innerHTML = (Number(cells[12].innerHTML) + avgStats.hits*playerGames).toFixed(2);
+    cells[13].innerHTML = (Number(cells[13].innerHTML) + avgStats.blocked*playerGames).toFixed(2);
+    cells[14].innerHTML = (Number(cells[14].innerHTML) + avgStats.wins*playerGames).toFixed(2);
+    cells[15].innerHTML = avgStats.goalAgainstAverage;
+    cells[16].innerHTML = (Number(cells[16].innerHTML) + avgStats.saves*playerGames).toFixed(2);
+    cells[17].innerHTML = avgStats.savePercentage;
+    cells[18].innerHTML = (Number(cells[18].innerHTML) + avgStats.shutouts*playerGames).toFixed(2);
   }
   if(manager == 1){
-    cells[20].innerHTML = Number(cells[1].innerHTML) + playerGames;
-    cells[21].innerHTML = Math.round(Number(cells[2].innerHTML) + avgStats.goals*playerGames);
-    cells[22].innerHTML = Math.round(Number(cells[3].innerHTML) + avgStats.assists*playerGames);
-    cells[23].innerHTML = Math.round(Number(cells[4].innerHTML) + avgStats.points*playerGames);
-    cells[24].innerHTML = Math.round(Number(cells[5].innerHTML) + avgStats.plusMinus*playerGames);
-    cells[25].innerHTML = Math.round(Number(cells[6].innerHTML) + avgStats.pim*playerGames);
-    cells[26].innerHTML = Math.round(Number(cells[7].innerHTML) + avgStats.powerPlayPoints*playerGames);
-    cells[27].innerHTML = Math.round(Number(cells[8].innerHTML) + avgStats.shortHandedPoints*playerGames);
-    cells[28].innerHTML = Math.round(Number(cells[9].innerHTML) + avgStats.gameWinningGoals*playerGames);
-    cells[29].innerHTML = Math.round(Number(cells[10].innerHTML) + avgStats.shots*playerGames);
-    cells[30].innerHTML = Math.round(Number(cells[11].innerHTML) + avgStats.faceOffPct*playerGames);
-    cells[31].innerHTML = Math.round(Number(cells[12].innerHTML) + avgStats.hits*playerGames);
-    cells[32].innerHTML = Math.round(Number(cells[13].innerHTML) + avgStats.blocked*playerGames);
-    cells[33].innerHTML = Math.round(Number(cells[14].innerHTML) + avgStats.wins*playerGames);
-    cells[34].innerHTML = Math.round(Number(cells[15].innerHTML) + avgStats.goalAgainstAverage*playerGames);
-    cells[35].innerHTML = Math.round(Number(cells[16].innerHTML) + avgStats.saves*playerGames);
-    cells[36].innerHTML = Math.round(Number(cells[17].innerHTML) + avgStats.savePercentage*playerGames);
-    cells[37].innerHTML = Math.round(Number(cells[18].innerHTML) + avgStats.shutouts*playerGames);
+    cells[20].innerHTML = Number(cells[20].innerHTML) + playerGames;
+    cells[21].innerHTML = (Number(cells[21].innerHTML) + avgStats.goals*playerGames).toFixed(2);
+    cells[22].innerHTML = (Number(cells[22].innerHTML) + avgStats.assists*playerGames).toFixed(2);
+    cells[23].innerHTML = (Number(cells[23].innerHTML) + avgStats.points*playerGames).toFixed(2);
+    cells[24].innerHTML = (Number(cells[24].innerHTML) + avgStats.plusMinus*playerGames).toFixed(2);
+    cells[25].innerHTML = (Number(cells[25].innerHTML) + avgStats.pim*playerGames).toFixed(2);
+    cells[26].innerHTML = (Number(cells[26].innerHTML) + avgStats.powerPlayPoints*playerGames).toFixed(2);
+    cells[27].innerHTML = (Number(cells[27].innerHTML) + avgStats.shortHandedPoints*playerGames).toFixed(2);
+    cells[28].innerHTML = (Number(cells[28].innerHTML) + avgStats.gameWinningGoals*playerGames).toFixed(2);
+    cells[29].innerHTML = (Number(cells[29].innerHTML) + avgStats.shots*playerGames).toFixed(2);
+    cells[30].innerHTML = (Number(cells[30].innerHTML) + avgStats.faceOffPct*playerGames).toFixed(2);
+    cells[31].innerHTML = (Number(cells[31].innerHTML) + avgStats.hits*playerGames).toFixed(2);
+    cells[32].innerHTML = (Number(cells[32].innerHTML) + avgStats.blocked*playerGames).toFixed(2);
+    cells[33].innerHTML = (Number(cells[33].innerHTML) + avgStats.wins*playerGames).toFixed(2);
+    cells[34].innerHTML = avgStats.goalAgainstAverage;
+    cells[35].innerHTML = (Number(cells[35].innerHTML) + avgStats.saves*playerGames).toFixed(2);
+    cells[36].innerHTML = avgStats.savePercentage;
+    cells[37].innerHTML = (Number(cells[37].innerHTML) + avgStats.shutouts*playerGames).toFixed(2);
   }
+  resetScore();
 };
+
+const removeStats = async(manager, avgStats, playerGames) => {
+  //start by grabbing the cells
+  var cells = document.getElementsByTagName('td'); //this needs to be changed
+
+  //add each of the averaged stat multiplied by the playerGames to each cell
+  //cell 0 is My Score, this will be manipulated by another function
+  //start by grabbing the contents of the cell, add to it, reprint the cell
+  if(manager == 0){
+    cells[1].innerHTML = Number(cells[1].innerHTML) - playerGames;
+    cells[2].innerHTML = (Number(cells[2].innerHTML) - avgStats.goals*playerGames).toFixed(2);
+    cells[3].innerHTML = (Number(cells[3].innerHTML) - avgStats.assists*playerGames).toFixed(2);
+    cells[4].innerHTML = (Number(cells[4].innerHTML) - avgStats.points*playerGames).toFixed(2);
+    cells[5].innerHTML = (Number(cells[5].innerHTML) - avgStats.plusMinus*playerGames).toFixed(2);
+    cells[6].innerHTML = (Number(cells[6].innerHTML) - avgStats.pim*playerGames).toFixed(2);
+    cells[7].innerHTML = (Number(cells[7].innerHTML) - avgStats.powerPlayPoints*playerGames).toFixed(2);
+    cells[8].innerHTML = (Number(cells[8].innerHTML) - avgStats.shortHandedPoints*playerGames).toFixed(2);
+    cells[9].innerHTML = (Number(cells[9].innerHTML) - avgStats.gameWinningGoals*playerGames).toFixed(2);
+    cells[10].innerHTML = (Number(cells[10].innerHTML) - avgStats.shots*playerGames).toFixed(2);
+    cells[11].innerHTML = (Number(cells[11].innerHTML) - avgStats.faceOffPct*playerGames).toFixed(2);
+    cells[12].innerHTML = (Number(cells[12].innerHTML) - avgStats.hits*playerGames).toFixed(2);
+    cells[13].innerHTML = (Number(cells[13].innerHTML) - avgStats.blocked*playerGames).toFixed(2);
+    cells[14].innerHTML = (Number(cells[14].innerHTML) - avgStats.wins*playerGames).toFixed(2);
+    cells[15].innerHTML = Number(cells[15].innerHTML) - avgStats.goalAgainstAverage;
+    cells[16].innerHTML = (Number(cells[16].innerHTML) - avgStats.saves*playerGames).toFixed(2);
+    cells[17].innerHTML = Number(cells[17].innerHTML) - avgStats.savePercentage;
+    cells[18].innerHTML = (Number(cells[18].innerHTML) - avgStats.shutouts*playerGames).toFixed(2);
+  }
+  if(manager == 1){
+    cells[20].innerHTML = Number(cells[20].innerHTML) - playerGames;
+    cells[21].innerHTML = (Number(cells[21].innerHTML) - avgStats.goals*playerGames).toFixed(2);
+    cells[22].innerHTML = (Number(cells[22].innerHTML) - avgStats.assists*playerGames).toFixed(2);
+    cells[23].innerHTML = (Number(cells[23].innerHTML) - avgStats.points*playerGames).toFixed(2);
+    cells[24].innerHTML = (Number(cells[24].innerHTML) - avgStats.plusMinus*playerGames).toFixed(2);
+    cells[25].innerHTML = (Number(cells[25].innerHTML) - avgStats.pim*playerGames).toFixed(2);
+    cells[26].innerHTML = (Number(cells[26].innerHTML) - avgStats.powerPlayPoints*playerGames).toFixed(2);
+    cells[27].innerHTML = (Number(cells[27].innerHTML) - avgStats.shortHandedPoints*playerGames).toFixed(2);
+    cells[28].innerHTML = (Number(cells[28].innerHTML) - avgStats.gameWinningGoals*playerGames).toFixed(2);
+    cells[29].innerHTML = (Number(cells[29].innerHTML) - avgStats.shots*playerGames).toFixed(2);
+    cells[30].innerHTML = (Number(cells[30].innerHTML) - avgStats.faceOffPct*playerGames).toFixed(2);
+    cells[31].innerHTML = (Number(cells[31].innerHTML) - avgStats.hits*playerGames).toFixed(2);
+    cells[32].innerHTML = (Number(cells[32].innerHTML) - avgStats.blocked*playerGames).toFixed(2);
+    cells[33].innerHTML = (Number(cells[33].innerHTML) - avgStats.wins*playerGames).toFixed(2);
+    cells[34].innerHTML = Number(cells[34].innerHTML) - avgStats.goalAgainstAverage;
+    cells[35].innerHTML = (Number(cells[35].innerHTML) - avgStats.saves*playerGames).toFixed(2);
+    cells[36].innerHTML = Number(cells[36].innerHTML) - avgStats.savePercentage;
+    cells[37].innerHTML = (Number(cells[37].innerHTML) - avgStats.shutouts*playerGames).toFixed(2);
+  }
+  resetScore();
+};
+
+const resetScore = async(e) => {
+  var cells = document.getElementsByTagName('td');
+  let myScore=0, opponentScore=0;
+
+  for(let i=2;i<19;i++){
+    if(Number(cells[i].innerHTML) > Number(cells[i+19].innerHTML)){
+      myScore++;
+      cells[i].setAttribute('style', 'background-color: green !important');
+      cells[i+19].setAttribute('style', 'background-color: black');
+    }
+    else if(Number(cells[i].innerHTML) < Number(cells[i+19].innerHTML)){
+      opponentScore++;
+      cells[i].setAttribute('style', 'background-color: black');
+      cells[i+19].setAttribute('style', 'background-color: green !important');
+    }
+    else{
+      cells[i].setAttribute('style', 'background-color: black');
+      cells[i+19].setAttribute('style', 'background-color: black');
+    }
+  }
+  //goals against average only exception, so reset
+  if(Number(cells[15].innerHTML) > Number(cells[34].innerHTML)){
+    myScore--, opponentScore++;
+    cells[15].setAttribute('style', 'background-color: black');
+    cells[34].setAttribute('style', 'background-color: green !important');
+  }
+  else if(Number(cells[15].innerHTML) < Number(cells[34].innerHTML)){
+    myScore++, opponentScore--;
+    cells[15].setAttribute('style', 'background-color: green !important');
+    cells[34].setAttribute('style', 'background-color: black');
+  }
+  //if goals against becomes 0, it doesn't count
+  if(Number(cells[15].innerHTML) == 0){
+    myScore--;
+    cells[15].setAttribute('style', 'background-color: black');
+  }
+  if(Number(cells[34].innerHTML) == 0){
+    opponentScore--;
+    cells[34].setAttribute('style', 'background-color: black');
+  }
+  cells[0].innerHTML=myScore;
+  cells[19].innerHTML=opponentScore;
+  //currently doesn't handle one guy having a GAA and the other having 0, so giving the guy that has a goalie a point....but really....not really a scenario that will happen
+}
 
 const triggerEvent = (el, eventName) => {
   const event = document.createEvent('HTMLEvents');
@@ -315,19 +411,19 @@ const addMyPlayer = async (e) => {
   var playerConflict = false;
   //before any of this gets actioned, we need to check if the player already exists in the list
   for(let i=0; i<myTeam.length; i++){
-    if(myTeam[i] === player.fullName){
+    if(myTeam[i].fullName === player.fullName){
         playerConflict = true;
         alert("Yo...that player is already on your team jackass");
     }
   }
   for(let i=0; i<myOpponent.length;i++){
-    if(myOpponent[i] === player.fullName){
+    if(myOpponent[i].fullName === player.fullName){
       playerConflict = true;
       alert("K...that player is already on your opponent's team, what kind of league is this?");
     }
   }
   if (!playerConflict){
-    myTeam.push(player.fullName);
+    myTeam.push(player);
     const playerGames = await fetchSchedule(teamSelect.value);
     const stats = await fetchStats(playerSelect.value, seasonSelect.value);
     const avgStats = await averageOutStats(stats);
@@ -336,11 +432,11 @@ const addMyPlayer = async (e) => {
     //here we take the player name and how many games they have left (but really just the number of games retured by total games in the fetchSchedule json) and place it into the manager's table
     var tbl = document.getElementById('tblMyTeam'),
     row = tbl.insertRow(tbl.rows.lentgh);
-    var cell1 = row.insertCell(0),
-    cell2 = row.insertCell(1);
+    var cell1 = row.insertCell(0), cell2 = row.insertCell(1), cell3 = row.insertCell(2);
     let playerName = document.createTextNode(player.fullName);
     cell1.appendChild(playerName);
     cell2.innerHTML=playerGames;
+    cell3.innerHTML='<input type="button" value="Remove" onclick="removePlayer(0,this)"/>'
     //need a button to remove player
       
     //addStats(manager, stats, playerGames) <-- ideal call here, but we'll have to make due with addStats(avgStats, playergGames) for now since I don't have a manager object being handled by the buttons yet
@@ -350,46 +446,75 @@ const addMyPlayer = async (e) => {
 };
 
 const addVSPlayer = async (e) => {
-  const playerSelect = document.querySelector('select[name="roster"]');
-  const seasonSelect = document.querySelector('select[name="season"]');
-  const teamSelect = document.querySelector('select[name="teams"]');
-  const player = await fetchPlayer(playerSelect.value);
-  var playerConflict = false;
+  let playerSelect = document.querySelector('select[name="roster"]');
+  let seasonSelect = document.querySelector('select[name="season"]');
+  let teamSelect = document.querySelector('select[name="teams"]');
+  let player = await fetchPlayer(playerSelect.value);
+  let playerConflict = false;
   //before any of this gets actioned, we need to check if the player already exists in the list
   for(let i=0; i<myTeam.length; i++){
-    if(myTeam[i] === player.fullName){
+    if(myTeam[i].fullName === player.fullName){
         playerConflict = true;
         alert("Yo...that player is already on your team jackass");
     }
   }
   for(let i=0; i<myOpponent.length;i++){
-    if(myOpponent[i] === player.fullName){
+    if(myOpponent[i].fullName === player.fullName){
       playerConflict = true;
       alert("K...that player is already on your opponent's team, what kind of league is this?");
     }
   }
   if (!playerConflict){
-    myOpponent.push(player.fullName);
-    const playerGames = await fetchSchedule(teamSelect.value);
-    const stats = await fetchStats(playerSelect.value, seasonSelect.value);
-    const avgStats = await averageOutStats(stats);
+    myOpponent.push(player);
+    let playerGames = await fetchSchedule(teamSelect.value);
+    let stats = await fetchStats(playerSelect.value, seasonSelect.value);
+    let avgStats = await averageOutStats(stats);
+    console.log(avgStats);
       
     //now we need to take the average stats, multiply them by the player's games in the date range and add them to the proper row
     //here we take the player name and how many games they have left (but really just the number of games retured by total games in the fetchSchedule json) and place it into the manager's table
-    var tbl = document.getElementById('tblVSTeam'),
+    let tbl = document.getElementById('tblVSTeam'),
     row = tbl.insertRow(tbl.rows.lentgh);
-    var cell1 = row.insertCell(0),
-    cell2 = row.insertCell(1);
+    let cell1 = row.insertCell(0), cell2 = row.insertCell(1), cell3 = row.insertCell(2);
     let playerName = document.createTextNode(player.fullName);
     cell1.appendChild(playerName);
     cell2.innerHTML=playerGames;
-    //need a button to remove player
+    cell3.innerHTML='<input type="button" value="Remove" onclick="removePlayer(1, this)"/>'
       
     //addStats(manager, stats, playerGames) <-- ideal call here, but we'll have to make due with addStats(avgStats, playergGames) for now since I don't have a manager object being handled by the buttons yet
     addStats(1, avgStats, playerGames);
     //updateScore()
   }
 };
+
+const removePlayer = async(manager, btn) => {
+  let row = btn.parentNode.parentNode;
+  let playerName = row.cells[0].innerHTML;
+  let gamesLeft = row.cells[1].innerHTML;
+  let playerRemoved;
+
+  if(manager==0){
+    for(let i=0; i<myTeam.length;i++){
+      if(myTeam[i].fullName===playerName){
+        playerRemoved=myTeam[i];
+        myTeam.splice(i, 1);
+        row.parentNode.removeChild(row);
+      }
+    }
+  }else{
+    for(let i=0; i<myOpponent.length;i++){
+      if(myOpponent[i].fullName===playerName){
+        playerRemoved=myOpponent[i];
+        myOpponent.splice(i, 1);
+        row.parentNode.removeChild(row);
+      }
+    }
+  }
+  let seasonSelect = document.querySelector('select[name="season"]');
+  let stats = await fetchStats(playerRemoved.id, seasonSelect.value);
+  let avgStats = await averageOutStats(stats);
+  removeStats(manager, avgStats, gamesLeft);
+}
 
 
 const main = async () => {
