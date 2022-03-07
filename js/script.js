@@ -484,13 +484,13 @@ const addPlayer = async (manager) => {
     if(manager==0){
       cell2.innerHTML= '<select id="myRosterGamesSelect'+myRoster.member.length+'" onchange="onPlayerGamesChange(this)"><option value='+x[0]+'>'+x[0]+'</option><option value='+x[1]+'>'+x[1]+'</option><option value='+x[2]+'>'+x[2]+'</option><option value='+x[3]+'>'+x[3]+'</option><option value='+x[4]+'>'+x[4]+'</option><option value='+x[5]+'>'+x[5]+'</option><option value='+x[6]+'>'+x[6]+'</option></select>';
       let thisSelect = document.querySelector('select[id="myRosterGamesSelect'+myRoster.member.length+'"]');
-      thisSelect.addEventListener('change', onPlayerGamesChange(thisSelect));
+      //thisSelect.addEventListener('change', onPlayerGamesChange(thisSelect));
     }
     if(manager==1){
       //the onchange isn't working
       cell2.innerHTML= '<select id="myRosterGamesSelect'+opponentRoster.member.length+'" onchange="onPlayerGamesChange(this)"><option value='+x[0]+'>'+x[0]+'</option><option value='+x[1]+'>'+x[1]+'</option><option value='+x[2]+'>'+x[2]+'</option><option value='+x[3]+'>'+x[3]+'</option><option value='+x[4]+'>'+x[4]+'</option><option value='+x[5]+'>'+x[5]+'</option><option value='+x[6]+'>'+x[6]+'</option></select>';
       let thisSelect = document.querySelector('select[id="opponentRosterGamesSelect'+opponentRoster.member.length+'"]');
-      thisSelect.addEventListener('change', onPlayerGamesChange(thisSelect));
+      //thisSelect.addEventListener('change', onPlayerGamesChange(thisSelect));
     }
     //remove button
     cell3.innerHTML='<input type="button" value="Remove" onclick="removePlayer('+manager+',this)"/>';
