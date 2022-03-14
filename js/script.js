@@ -425,7 +425,7 @@ const onPlayerGamesChange = async (select) => {
     for(let i=0;i<=opponentRoster.member.length-1;i++){
       if(opponentRoster.member[i].player.fullName == playerName){
         opponentRoster.member[i].gamesLeft = select.value;
-        i=myRoster.member.length;
+        i=opponentRoster.member.length;
       }
     }
   }
